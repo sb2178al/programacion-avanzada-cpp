@@ -54,6 +54,22 @@ void imprimirConObjetos() {
 
     // TODO: imprime el resumen de cada uno, en el mismo formato de arriba,
     // usando rect1.area(), rect1.perimetro(), rect2.area(), rect2.perimetro()
+    Rectangulo rect1;
+    Rectangulo rect2;
+    rect1.base = 10.0;
+    rect1.altura = 5.0;
+    rect2.base = 6.0;
+    rect2.altura = 4.0; 
+    std::cout << "Rectangulo 1, Area: " << rect1.area()
+          << ", Perimetro: " << rect1.perimetro() << std::endl;
+
+  std::cout << "Rectangulo 2, Area: " << rect2.area()
+          << ", Perimetro: " << rect2.perimetro() << std::endl;
+
+    std::cout << "Rectangulo 1, Area: " << rect1.perimetro()
+              << ", Perimetro: " << rect1.perimetro() << std::endl;
+    std::cout << "Rectangulo 2, Area: " << rect2.perimetro()
+              << ", Perimetro: " << rect2.perimetro() << std::endl;          
     
 }
 
