@@ -54,6 +54,7 @@ void imprimirConObjetos() {
 
     // TODO: imprime el resumen de cada uno, en el mismo formato de arriba,
     // usando rect1.area(), rect1.perimetro(), rect2.area(), rect2.perimetro()
+    
 }
 
 int main() {

@@ -16,23 +16,24 @@
 
 double area(double base, double altura) {
     // TODO: retorna base * altura
-    return 0.0;
+    return base * altura ;
 }
 
 double perimetro(double base, double altura) {
     // TODO: retorna 2 * (base + altura)
-    return 0.0;
+    return 2*(base + altura);
 }
 
 double nuevaBase(double base, double factor) {
     // TODO: retorna base * factor
-    return 0.0;
+    return base * 2.0;
 }
 
 double nuevaAltura(double altura, double factor) {
     // TODO: retorna altura * factor
-    return 0.0;
+    return altura * 2.0;
 }
+
 
 int main() {
     double base = 10.0;

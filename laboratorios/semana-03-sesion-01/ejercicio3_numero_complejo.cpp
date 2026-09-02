@@ -29,7 +29,7 @@ public:
     NumeroComplejo operator+(NumeroComplejo otro) {
         // TODO: retorna un NumeroComplejo nuevo con la suma de las
         // partes reales y la suma de las partes imaginarias.
-        return NumeroComplejo(0.0, 0.0);
+        return NumeroComplejo(real + otro.getReal(), imaginario + otro.getImaginario());
     }
 };
 
