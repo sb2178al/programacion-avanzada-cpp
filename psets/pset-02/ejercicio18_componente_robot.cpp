@@ -42,3 +42,51 @@
 // Peso: 12.5
 // Version: 3
 // Autonomo: true
+
+#include <iostream>
+#include <iomanip>
+
+class Componente {
+private:
+    int codigoSerie;
+public:
+    Componente(int c);
+    bool setCodigoSerie(int c);
+    int getCodigoSerie() const;
+};
+
+class ComponenteMecanico : virtual public Componente {
+private:
+    double pesoKg;
+public:
+    ComponenteMecanico(int c, double p);
+    bool setPesoKg(double p);
+    double getPesoKg() const;
+};
+
+class ComponenteDigital : virtual public Componente {
+private:
+    int version;
+public:
+    ComponenteDigital(int c, int v);
+    bool setVersion(int v);
+    int getVersion() const;
+};
+
+class Robot : public ComponenteMecanico, public ComponenteDigital {
+private:
+    bool autonomo;
+public:
+    Robot(int c, double p, int v, bool a);
+    void setAutonomo(bool a);
+    bool getAutonomo() const;
+};
+int main () {
+    Robot robot(4821, 12.5, 3, true);
+    std::cout << "Codigo serie: " << robot.getCodigoSerie() << std::endl;
+    std::cout << "Peso: " << robot.getPesoKg() << std::endl;
+    std::cout << "Version: " << robot.getVersion() << std::endl;
+    std::cout << std::boolalpha; // Para imprimir bool como true/false
+    std::cout << "Autonomo: " << robot.getAutonomo() << std::endl;
+    return 0;
+}

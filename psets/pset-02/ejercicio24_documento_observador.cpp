@@ -54,3 +54,75 @@
 // Referencias tras reset del original: 1
 // Documento existe (observador): true
 // Documento existe (observador): false
+
+#include <iostream>
+#include <memory>
+
+class documento {
+private:
+    int numeroVersion;
+public:
+    bool setNumeroVersion(int v) {
+        if (v >= 1 && v <= 999) {
+            numeroVersion = v;
+            return true;
+        }
+        return false;
+    }
+    int getNumeroVersion() const {
+        return numeroVersion;
+    }
+};
+
+class propietario {
+private:
+    std::shared_ptr<documento> documentoActual;
+public:
+    void adoptar(std::shared_ptr<documento> doc) {
+        documentoActual = doc;
+    }
+    void soltar() {
+        documentoActual.reset();
+    }
+    int contadorReferencias() const {
+        return documentoActual.use_count();
+    }
+};
+
+class observador {
+private:
+    std::weak_ptr<documento> documentoObservado;
+public:
+    void observar(std::shared_ptr<documento> doc) {
+        documentoObservado = doc;
+    }
+    bool documentoTodaviaExiste() const {
+        return !documentoObservado.expired();
+    }
+};
+
+int main ()
+{
+    auto doc = std::make_shared<documento>();
+    doc->setNumeroVersion(3);
+
+    propietario dueno;
+    dueno.adoptar(doc);
+    std::cout << "Referencias tras adoptar: " << dueno.contadorReferencias() << std::endl;
+
+    observador obs;
+    obs.observar(doc);
+    std::cout << std::boolalpha;
+    std::cout << "Documento existe (observador): " << obs.documentoTodaviaExiste() << std::endl;
+
+    std::cout << "Referencias despues de observar: " << dueno.contadorReferencias() << std::endl;
+
+    doc.reset();
+    std::cout << "Referencias tras reset del original: " << dueno.contadorReferencias() << std::endl;
+    std::cout << "Documento existe (observador): " << obs.documentoTodaviaExiste() << std::endl;
+
+    dueno.soltar();
+    std::cout << "Documento existe (observador): " << obs.documentoTodaviaExiste() << std::endl;
+
+    return 0;
+}
