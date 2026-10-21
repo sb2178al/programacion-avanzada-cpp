@@ -73,8 +73,12 @@ class Triangulo : public Figura {
             std::cout << "Triangulo";
         }
 
+
         // TODO (paso 3): despues del paso 1, compila y lee el error que
         // aparece en main. Agrega lo que le falta a Triangulo.
+        double area() override {
+            return (base * altura) / 2.0;
+        }
 };
 
 int main() {
