@@ -1,4 +1,8 @@
+#include <algorithm>
 #include <iostream>
+#include <map>
+#include <vector>
+#include <set>
 
 // Salida esperada:
 // Stock: 120=2 210=5 305=10
@@ -50,6 +54,89 @@
 //   precedido de un espacio. Termina la linea.
 // - void imprimirAgotados(): "Agotados alguna vez:" y cada codigo
 //   precedido de un espacio. Termina la linea.
+
+class Bodega {
+    private:
+        std::map<int, int> stock;
+        std::vector<int> historialRetiros;
+        std::vector<int> agotados;
+
+    public:
+        void ingresar(int codigo, int cantidad);
+        bool retirar(int codigo, int cantidad);
+        int stockDe(int codigo);
+        int cantidadDeProductos();
+        int retiroNumero(int posicion);
+        void imprimirStock();
+        void imprimirRetiros();
+        void imprimirAgotados();
+};
+
+void Bodega::ingresar(int codigo, int cantidad) {
+    stock[codigo] += cantidad;
+}
+
+bool Bodega::retirar(int codigo, int cantidad) {
+    auto it = stock.find(codigo);
+    if (it == stock.end() || it->second < cantidad) {
+        return false;
+    }
+
+    it->second -= cantidad;
+    historialRetiros.push_back(codigo);
+
+    if (it->second == 0) {
+        if (std::find(agotados.begin(), agotados.end(), codigo) == agotados.end()) {
+            agotados.push_back(codigo);
+            std::sort(agotados.begin(), agotados.end());
+        }
+    }
+
+    return true;
+}
+
+int Bodega::stockDe(int codigo) {
+    auto it = stock.find(codigo);
+    if (it == stock.end()) {
+        return 0;
+    }
+    return it->second;
+}
+
+int Bodega::cantidadDeProductos() {
+    return static_cast<int>(stock.size());
+}
+
+int Bodega::retiroNumero(int posicion) {
+    if (posicion < 0 || posicion >= static_cast<int>(historialRetiros.size())) {
+        return 0;
+    }
+    return historialRetiros[posicion];
+}
+
+void Bodega::imprimirStock() {
+    std::cout << "Stock:";
+    for (const auto& [codigo, cantidad] : stock) {
+        std::cout << " " << codigo << "=" << cantidad;
+    }
+    std::cout << std::endl;
+}
+
+void Bodega::imprimirRetiros() {
+    std::cout << "Retiros:";
+    for (int codigo : historialRetiros) {
+        std::cout << " " << codigo;
+    }
+    std::cout << std::endl;
+}
+
+void Bodega::imprimirAgotados() {
+    std::cout << "Agotados alguna vez:";
+    for (int codigo : agotados) {
+        std::cout << " " << codigo;
+    }
+    std::cout << std::endl;
+}
 
 void informarRetiro(int codigo, int cantidad, bool aceptado) {
     std::cout << "Retirar " << cantidad << " de " << codigo << ": ";
