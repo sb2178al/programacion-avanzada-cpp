@@ -31,25 +31,21 @@ class Bodega {
         // Ningun caso rechazado puede modificar el stock.
         bool retirar(int codigo, int cantidad) {
             if (cantidad <= 0) {
-                return false;
+                throw std::invalid_argument("cantidad no positiva");
             }
             if (stock.count(codigo) == 0) {
-                return false;
+                throw std::out_of_range("codigo desconocido");
             }
             if (stock[codigo] < cantidad) {
-                return false;
+                throw std::runtime_error("stock insuficiente");
             }
             stock[codigo] = stock[codigo] - cantidad;
             return true;
         }
-
         // TODO 2: lee el stock con stock.at(codigo), sin revisar antes con
         // count: si el codigo no existe, que la excepcion salga de aqui.
         int stockDe(int codigo) {
-            if (stock.count(codigo) == 0) {
-                return -1;
-            }
-            return stock[codigo];
+            return stock.at(codigo);
         }
 
         void imprimirStock() {
